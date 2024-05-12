@@ -19,10 +19,21 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-// your first API endpoint...
-app.get('/api/hello', function (req, res) {
-  res.json({ greeting: 'hello API' });
+// Your modification starts here
+app.get('/api/whoami', function (req, res) {
+  // Get IP address
+  const ipaddress = req.ip.replace('::ffff:', ''); // removing IPv6 prefix
+  
+  // Get preferred language
+  const language = req.headers['accept-language'];
+  
+  // Get software
+  const software = req.headers['user-agent'];
+  
+  // Send JSON response
+  res.json({ ipaddress, language, software });
 });
+// Your modification ends here
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000, function () {
